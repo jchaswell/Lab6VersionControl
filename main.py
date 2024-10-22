@@ -3,7 +3,6 @@
 #Encoder, receives str of numbers of any length, returns int where each digit has been increased by three.
 def encode(input_num):
     encoded_num = ''
-    new_digit = 0
     for digit in str(input_num):
         encoded_digit = int(digit) + 3
         encoded_num += str(encoded_digit)[-1]

@@ -4,44 +4,56 @@
 def encode(input_num):
     encoded_num = ''
     for digit in str(input_num):
-        encoded_digit = int(digit) + 3
-        encoded_num += str(encoded_digit)[-1]
+        encoded_digit = (int(digit) + 3) % 10
+        encoded_num += str(encoded_digit)
     return int(encoded_num)
 
+#decoder will take the encoded str and return the original password
 def decode(encoded_num):
-    pass
+    decoded_num = ''
+    for digit in str(encoded_num): #iterate through each num in str and subtract 3
+        decoded_digit = (int(digit) - 3) % 10 #use % to compensate for negative values
+        decoded_num += str(decoded_digit)
+    return decoded_num
 
+
+
+#set up main function menu screen
 def main():
+    encoded_num = None
     while True:
         print("Menu")
         print("-------------")
         print("1. Encode")
         print("2. Decode")
         print("3. Quit")
-
+        #user will select an option from menu
         try:
             menu_option = int(input("Please enter an option: "))
         except ValueError:
-            print("Invalid input")
+            print("Invalid input") #qc for bugs if user selects invalid option #
             continue
 
+        #allow user to enter password they wish to encode
         if menu_option == 1:
             input_num = (input("Please enter your password to encode:  "))
-            if len(input_num) == 8 and input_num.isdigit():
+            if len(input_num) == 8 and input_num.isdigit(): #password should be 8 characters long and all numbers
                 encoded_num = encode(input_num)
                 print(f"Your password has been encoded and stored!")
             else:
-                print("Invalid input.")
+                print("Invalid input.") #qc for bugs if password not correct format
             print("")
 
+        #print out the encoded password, as well as the original
         elif menu_option == 2:
-            if len(str(encoded_num)) == 8 and str(encoded_num).isdigit():
-                input_num = decode(encoded_num)
-                print(f"The encoded password is {encoded_num}, and the original password is {input_num}.")
+            if encoded_num is not None:  #check if a password has been encoded
+                original_password = decode(encoded_num)
+                print(f"Then encoded password is {encoded_num}, the original password is {original_password}.")
             else:
-                print("Invalid input.")
-            print()
+                print("Please enter a valid password.") #qc if no original password entered
+                print("")
+
         elif menu_option == 3:
             break
-
-main()
+if __name__ == '__main__':
+    main()
